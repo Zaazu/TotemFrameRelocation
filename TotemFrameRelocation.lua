@@ -99,10 +99,10 @@ if (UseSquareMask) then
 end
 
 -- Register PLAYER_LOGIN event and set OnEvent script
-TotemFrame:RegisterEvent("PLAYER_LOGIN")
+TotemFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 TotemFrame:HookScript("OnShow", ReparentFrame)
 TotemFrame:HookScript("OnEvent", function(self, event)
-	if (event == "PLAYER_LOGIN") then
+	if (event == "PLAYER_ENTERING_WORLD") then
 		ReparentFrame(self)
 	end
 end)
