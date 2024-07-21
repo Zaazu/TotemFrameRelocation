@@ -11,6 +11,13 @@ local Disabled = false						-- Disable parenting
 local Verbose = true						-- Display debug messages
 
 local AddonName = ...
+
+--If the player is not a shaman, disable the addon
+if(UnitClassBase("player") ~= "SHAMAN") then
+	C_AddOns.DisableAddOn(AddonName, UnitName("player"))
+	return
+end
+
 local function Printv(message)
 	if (Verbose) then
 		print( "[".. AddonName .."]: " .. message)
