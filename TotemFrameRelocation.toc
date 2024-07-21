@@ -4,6 +4,7 @@
 ## Version: 2.0.0
 
 libs\LibStub\LibStub.lua
+libs\LibDropDown\LibDropDown.lua
 libs\LibEditMode\embed.xml
 
 TotemFrameRelocation.lua
