@@ -1,15 +1,15 @@
-local ParentFrameName = "PlayerFrame"        -- Frame for the TotemFrame to attach to.
-local ParentAnchorPosition = "BOTTOMRIGHT";  -- Attachment point on the parent frame.
-local TotemFrameAnchorPosition = "TOPRIGHT"; -- Attachment point on the TotemFrame.
-local UseSquareMask = true;                  -- Apply square mask to totem icons (true or false).
-local XOffset = 0;                           -- Horizontal offset from the attachment point.
-local YOffset = 0;                           -- Vertical offset from the attachment point.
+local ParentFrameName = "PlayerFrame"       -- Frame for the TotemFrame to attach to.
+local ParentAnchorPosition = "BOTTOMRIGHT"  -- Attachment point on the parent frame.
+local TotemFrameAnchorPosition = "TOPRIGHT" -- Attachment point on the TotemFrame.
+local UseSquareMask = true                  -- Apply square mask to totem icons (true or false).
+local XOffset = 0                           -- Horizontal offset from the attachment point.
+local YOffset = 0                           -- Vertical offset from the attachment point.
 
 
-local MaxParentAttempts = 10;
-local ParentAttempt = 0
-local Disabled = false;
-local Verbose = true
+local MaxParentAttempts = 10				-- Max number of parent attempts before giving up until reload
+local ParentAttempt = 0						-- Current number of attempts
+local Disabled = false						-- Disable parenting
+local Verbose = true						-- Display debug messages
 
 local function Printv(message)
 	if (Verbose) then
@@ -24,7 +24,7 @@ local function ReparentFrame(self)
 
 	local ParentFrame = _G[ParentFrameName]
 
-	--Give up if it takes too long to parent
+	-- Give up if it takes too long to parent
 	if (ParentAttempt >= MaxParentAttempts) then
 		Printv(ParentFrameName .. " frame does not exist, giving up.")
 
@@ -32,7 +32,7 @@ local function ReparentFrame(self)
 		return
 	end
 
-	--If the frame to parent exists and we're not attached to it yet
+	-- If the frame to parent exists and we're not attached to it yet
 	if (ParentFrame and self:GetParent() ~= ParentFrame) then
 		Printv("Attached " .. self:GetName() .. " to " .. ParentFrame:GetName() .. ".")
 
@@ -42,7 +42,7 @@ local function ReparentFrame(self)
 
 		ParentAttempt = 0
 	else
-		--If we're still not attached, the frame doesn't exist
+		-- If we're still not attached, the frame doesn't exist
 		if (self:GetParent() ~= ParentFrame) then
 			Printv(ParentFrameName .. " frame not found, retrying.")
 
@@ -77,10 +77,10 @@ end
 
 if (UseSquareMask) then
 	-- Hook the OnLoad function to modify totem buttons
-	hooksecurefunc(TotemButtonMixin, "OnLoad", ModifyTotemButton);
+	hooksecurefunc(TotemButtonMixin, "OnLoad", ModifyTotemButton)
 	-- Modify existing totem buttons
 	for button in TotemFrame.totemPool:EnumerateActive() do
-		ModifyTotemButton(button);
+		ModifyTotemButton(button)
 	end
 end
 
