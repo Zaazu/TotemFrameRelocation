@@ -5,16 +5,21 @@ local UseSquareMask = true                  -- Apply square mask to totem icons 
 local XOffset = 0                           -- Horizontal offset from the attachment point.
 local YOffset = 0                           -- Vertical offset from the attachment point.
 
-
 local MaxParentAttempts = 10				-- Max number of parent attempts before giving up until reload
 local ParentAttempt = 0						-- Current number of attempts
 local Disabled = false						-- Disable parenting
 local Verbose = true						-- Display debug messages
 
+local AddonName = ...
 local function Printv(message)
 	if (Verbose) then
-		print("[TotemFrameRelocation]: " .. message)
+		print( "[".. AddonName .."]: " .. message)
 	end
+end
+
+local function ResetParentAttempts()
+	Disabled = false
+	ParentAttempt = 0
 end
 
 local function ReparentFrame(self)
@@ -40,7 +45,7 @@ local function ReparentFrame(self)
 		self:SetParent(ParentFrame)
 		self:SetPoint(TotemFrameAnchorPosition, ParentFrame, ParentAnchorPosition, XOffset, YOffset)
 
-		ParentAttempt = 0
+		ResetParentAttempts()
 	else
 		-- If we're still not attached, the frame doesn't exist
 		if (self:GetParent() ~= ParentFrame) then
@@ -73,6 +78,8 @@ local function ModifyTotemButton(self)
 	local highTexCoords = { x = right, y = bottom }
 	self.Icon.Cooldown:SetSwipeTexture(squareMaskAtlas.file or squareMaskAtlas.filename)
 	self.Icon.Cooldown:SetTexCoordRange(lowTexCoords, highTexCoords)
+
+	self.Duration:Hide()
 end
 
 if (UseSquareMask) then
