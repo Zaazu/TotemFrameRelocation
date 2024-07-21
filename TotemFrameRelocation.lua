@@ -85,8 +85,6 @@ local function ModifyTotemButton(self)
 	local highTexCoords = { x = right, y = bottom }
 	self.Icon.Cooldown:SetSwipeTexture(squareMaskAtlas.file or squareMaskAtlas.filename)
 	self.Icon.Cooldown:SetTexCoordRange(lowTexCoords, highTexCoords)
-
-	self.Duration:Hide()
 end
 
 if (UseSquareMask) then
